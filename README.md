@@ -1,6 +1,7 @@
 # netmatch
 [![Build Status](https://travis-ci.org/mrd0ll4r/netmatch.svg?branch=master)](https://travis-ci.org/mrd0ll4r/netmatch)
 [![GoDoc](https://godoc.org/github.com/mrd0ll4r/netmatch?status.svg)](https://godoc.org/github.com/mrd0ll4r/netmatch)
+[![Go Report Card](https://goreportcard.com/badge/github.com/mrd0ll4r/netmatch)](https://goreportcard.com/report/github.com/mrd0ll4r/netmatch)
 
 Match an IP address against a lot of prefixes in constant time
 
