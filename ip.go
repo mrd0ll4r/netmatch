@@ -20,10 +20,10 @@ func Key(ip net.IP) [16]byte {
 	return array
 }
 
-// Subnet parses a subnet in CIDR notation and returns everything necessary
-// to add that subnet to the Trie.
-func Subnet(subnet string) ([16]byte, int, error) {
-	_, ipnet, err := net.ParseCIDR(subnet)
+// ParseNetwork parses a network in CIDR notation and returns everything
+// necessary to add that network to the Trie.
+func ParseNetwork(network string) ([16]byte, int, error) {
+	_, ipnet, err := net.ParseCIDR(network)
 	if err != nil {
 		return [16]byte{}, 0, err
 	}

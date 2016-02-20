@@ -27,7 +27,7 @@ func TestTrie(t *testing.T) {
 	assert.Nil(t, err)
 	assert.False(t, matches)
 
-	err = trie.Del(Key(ipnet.IP), size+12*8)
+	err = trie.Remove(Key(ipnet.IP), size+12*8)
 	assert.Nil(t, err)
 
 	matches, err = trie.Match(Key(ip))
@@ -81,9 +81,9 @@ func TestOverlapping(t *testing.T) {
 	assert.Nil(t, err)
 	assert.True(t, matches)
 
-	err = trie.Del(Key(bigNet.IP), bigSize)
+	err = trie.Remove(Key(bigNet.IP), bigSize)
 	assert.Nil(t, err)
-	err = trie.Del(Key(bigNet.IP), bigSize)
+	err = trie.Remove(Key(bigNet.IP), bigSize)
 	assert.NotNil(t, err)
 
 	matches, err = trie.Match(Key(inBoth))
@@ -94,9 +94,9 @@ func TestOverlapping(t *testing.T) {
 	assert.Nil(t, err)
 	assert.False(t, matches)
 
-	err = trie.Del(Key(smallNet.IP), smallSize)
+	err = trie.Remove(Key(smallNet.IP), smallSize)
 	assert.Nil(t, err)
-	err = trie.Del(Key(smallNet.IP), smallSize)
+	err = trie.Remove(Key(smallNet.IP), smallSize)
 	assert.NotNil(t, err)
 
 	matches, err = trie.Match(Key(inBoth))
@@ -110,10 +110,10 @@ func TestOverlapping(t *testing.T) {
 	err = trie.Add(Key(smallNet.IP), smallSize)
 	assert.Nil(t, err)
 
-	err = trie.Del(Key(bigNet.IP), bigSize)
+	err = trie.Remove(Key(bigNet.IP), bigSize)
 	assert.NotNil(t, err)
 
-	err = trie.Del(Key(smallNet.IP), smallSize)
+	err = trie.Remove(Key(smallNet.IP), smallSize)
 	assert.Nil(t, err)
 }
 
@@ -146,7 +146,7 @@ func TestSubnet(t *testing.T) {
 	}
 
 	for _, tt := range table {
-		key, length, err := Subnet(tt.input)
+		key, length, err := ParseNetwork(tt.input)
 		if tt.error {
 			assert.NotNil(t, err)
 		} else {
@@ -290,7 +290,7 @@ func BenchmarkTrieAddRemove(b *testing.B) {
 	net1Key := Key(net1.IP)
 	for i := 0; i < b.N; i++ {
 		trie.Add(net1Key, net1Size)
-		trie.Del(net1Key, net1Size)
+		trie.Remove(net1Key, net1Size)
 	}
 }
 

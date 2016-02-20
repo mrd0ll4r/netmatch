@@ -27,8 +27,8 @@ func New() *Trie {
 	}
 }
 
-// Add adds the given CIDR prefix into the Trie.
-// Note that an IPv6 prefix and appropriate length are expected.
+// Add adds the given network to the Trie.
+// Note that a valid IPv6 prefix and appropriate length are expected.
 func (t *Trie) Add(prefix [16]byte, length int) error {
 	if length >= 127 {
 		return errors.New("invalid length")
@@ -58,7 +58,7 @@ func (t *Trie) Add(prefix [16]byte, length int) error {
 	return nil
 }
 
-// Match matches the given IP address (in IPv6 form) against the Trie.
+// Match matches the given IP address (in IPv6 format) against the Trie.
 func (t *Trie) Match(addr [16]byte) (bool, error) {
 	current := t.root
 	next := t.root
@@ -88,9 +88,9 @@ func (t *Trie) Match(addr [16]byte) (bool, error) {
 	return false, nil
 }
 
-// Del removes the given CIDR prefix from the Trie.
+// Remove removes the given network from the Trie.
 // It expects the same parameters used to Add the prefix earlier.
-func (t *Trie) Del(prefix [16]byte, length int) error {
+func (t *Trie) Remove(prefix [16]byte, length int) error {
 	if length >= 127 {
 		return errors.New("invalid length")
 	}
