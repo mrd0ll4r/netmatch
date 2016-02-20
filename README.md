@@ -1,4 +1,6 @@
 # netmatch
+[![Build Status](https://travis-ci.org/mrd0ll4r/netmatch.svg?branch=master)](https://travis-ci.org/mrd0ll4r/netmatch)
+
 Match an IP address against a lot of prefixes in constant time
 
 ## What does it do?
