@@ -62,7 +62,7 @@ func (t *Trie) Add(prefix [16]byte, length int) error {
 func (t *Trie) Match(addr [16]byte) (bool, error) {
 	current := t.root
 	next := t.root
-	for i := 0; i < 126; i++ {
+	for i := 0; i < 127; i++ {
 		maskPosition := i % 8
 		currentByte := i / 8
 
