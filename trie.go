@@ -10,6 +10,12 @@ func init() {
 	}
 }
 
+// ErrInvalidLength is returned for invalid lengths.
+var ErrInvalidLength = errors.New("invalid length")
+
+// ErrNotContained is returned for deletes if the given prefix is not contained.
+var ErrNotContained = errors.New("not contained")
+
 type node struct {
 	children [2]*node
 	match    bool
@@ -31,7 +37,7 @@ func New() *Trie {
 // Note that a valid IPv6 prefix and appropriate length are expected.
 func (t *Trie) Add(prefix [16]byte, length int) error {
 	if length >= 127 {
-		return errors.New("invalid length")
+		return ErrInvalidLength
 	}
 	current := t.root
 	next := t.root
@@ -92,7 +98,7 @@ func (t *Trie) Match(addr [16]byte) (bool, error) {
 // It expects the same parameters used to Add the prefix earlier.
 func (t *Trie) Remove(prefix [16]byte, length int) error {
 	if length >= 127 {
-		return errors.New("invalid length")
+		return ErrInvalidLength
 	}
 
 	return t.delRecur(prefix, length, 0, t.root)
@@ -112,13 +118,13 @@ func (t *Trie) delRecur(prefix [16]byte, length, pos int, current *node) error {
 	next = current.children[child]
 
 	if next == nil {
-		return errors.New("not contained")
+		return ErrNotContained
 	}
 
 	if pos == length-1 {
 		//break
 		if !next.match {
-			return errors.New("not contained")
+			return ErrNotContained
 		}
 		next.match = false
 		if next.children[0] == nil && next.children[1] == nil {
