@@ -1,9 +1,10 @@
 package netmatch
 
 import (
-	"github.com/stretchr/testify/assert"
 	"net"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 // Benchmark data
